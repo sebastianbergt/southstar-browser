@@ -1,7 +1,7 @@
 [workspace]
 resolver = "3"
 members = ["rust/*"]
-exclude = ["third_party"]
+exclude = ["third_party", "fuzz"]
 
 [workspace.package]
 version = "1.0.8-dev"

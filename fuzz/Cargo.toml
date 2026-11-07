@@ -1,0 +1,256 @@
+[package]
+name = "southstar-fuzz"
+version = "0.0.0"
+edition = "2024"
+publish = false
+license = "LicenseRef-NSL-1.0 OR GPL-3.0-or-later"
+
+[package.metadata]
+cargo-fuzz = true
+
+[workspace]
+
+[dependencies]
+libfuzzer-sys = "=0.4.13"
+southstar-html5 = { path = "../rust/html5" }
+southstar-url = { path = "../rust/url" }
+southstar-http-wire = { path = "../rust/http-wire" }
+southstar-css-syntax = { path = "../rust/css-syntax" }
+southstar-css = { path = "../rust/css" }
+southstar-css-color = { path = "../rust/css-color" }
+southstar-css-prop-syntax = { path = "../rust/css-prop-syntax" }
+southstar-selector-text = { path = "../rust/selector-text" }
+southstar-xml = { path = "../rust/xml" }
+southstar-woff2 = { path = "../rust/woff2" }
+southstar-raster = { path = "../rust/raster" }
+southstar-image-decoders = { path = "../rust/image-decoders" }
+southstar-http = { path = "../rust/http" }
+brotli-decompressor = { version = "5", default-features = false, features = ["std"] }
+ruzstd = { version = "0.9", default-features = false, features = ["std"] }
+southstar-plmpeg = { path = "../rust/plmpeg" }
+southstar-minimp3 = { path = "../rust/minimp3" }
+southstar-bidi = { path = "../rust/bidi" }
+southstar-webvtt = { path = "../rust/webvtt" }
+southstar-csp = { path = "../rust/csp" }
+southstar-mime = { path = "../rust/mime" }
+southstar-netstore = { path = "../rust/netstore" }
+southstar-ipc = { path = "../rust/ipc" }
+southstar-svg = { path = "../rust/svg" }
+southstar-websocket = { path = "../rust/websocket" }
+southstar-eventsource = { path = "../rust/eventsource" }
+wasmi = { version = "2.0", default-features = false, features = ["std", "validate", "auto-dispatch", "portable-dispatch"] }
+read-fonts = "0.46"
+skrifa = "0.49"
+harfrust = "0.15"
+rustls = { version = "0.23.46", default-features = false, features = ["ring", "std", "tls12"] }
+ring = { version = "0.17.14", default-features = false }
+ml-kem = { version = "0.3.2", default-features = false, features = ["zeroize"] }
+zeroize = { version = "1.8", default-features = false }
+boa_engine = { package = "southstar-boa-engine", path = "../third_party/boa_engine", features = ["annex-b", "experimental"] }
+
+[profile.release]
+debug = 1
+overflow-checks = true
+
+[[bin]]
+name = "html5_document"
+path = "fuzz_targets/html5_document.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "html5_fragment"
+path = "fuzz_targets/html5_fragment.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "url"
+path = "fuzz_targets/url.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "http_h1"
+path = "fuzz_targets/http_h1.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "http_hpack"
+path = "fuzz_targets/http_hpack.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "http_h2"
+path = "fuzz_targets/http_h2.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "css_syntax"
+path = "fuzz_targets/css_syntax.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "css_sheet"
+path = "fuzz_targets/css_sheet.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "css_values"
+path = "fuzz_targets/css_values.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "xml"
+path = "fuzz_targets/xml.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "woff"
+path = "fuzz_targets/woff.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "raster"
+path = "fuzz_targets/raster.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "plmpeg"
+path = "fuzz_targets/plmpeg.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "minimp3"
+path = "fuzz_targets/minimp3.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "bidi"
+path = "fuzz_targets/bidi.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "text_formats"
+path = "fuzz_targets/text_formats.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "js_eval"
+path = "fuzz_targets/js_eval.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "images"
+path = "fuzz_targets/images.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "decompress"
+path = "fuzz_targets/decompress.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "websocket"
+path = "fuzz_targets/websocket.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "cookies"
+path = "fuzz_targets/cookies.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "eventsource"
+path = "fuzz_targets/eventsource.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "wasm"
+path = "fuzz_targets/wasm.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "fonts"
+path = "fuzz_targets/fonts.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "tls"
+path = "fuzz_targets/tls.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "js_builtins"
+path = "fuzz_targets/js_builtins.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "svg"
+path = "fuzz_targets/svg.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "ipc"
+path = "fuzz_targets/ipc.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "media_commands"
+path = "fuzz_targets/media_commands.rs"
+test = false
+doc = false
+bench = false
