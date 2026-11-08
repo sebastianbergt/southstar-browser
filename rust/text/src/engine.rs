@@ -51,8 +51,7 @@ pub fn accepts_web_font(data: &[u8]) -> bool {
     fonts.peek().is_some()
         && fonts.all(|font| {
             font.is_ok_and(|font| {
-                font
-                    .head()
+                font.head()
                     .is_ok_and(|head| (16..=16384).contains(&head.units_per_em()))
                     && font.maxp().is_ok()
                     && font.cmap().is_ok()

@@ -444,17 +444,12 @@ pub(crate) fn line_extents_and_height(
             ink = run_ink;
             ink.x = ink.x.saturating_add(x_pos);
         } else if run_ink.width != 0 && run_ink.height != 0 {
-<<<<<<< HEAD
-            (ink.x, ink.width) =
-                span_union(ink.x, ink.width, x_pos.saturating_add(run_ink.x), run_ink.width);
-=======
             (ink.x, ink.width) = span_union(
                 ink.x,
                 ink.width,
                 x_pos.saturating_add(run_ink.x),
                 run_ink.width,
             );
->>>>>>> fix/text-extents-overflow
             (ink.y, ink.height) = span_union(ink.y, ink.height, run_ink.y, run_ink.height);
         }
 
