@@ -60,3 +60,10 @@ have `unitsPerEm` 256, 1000, 1024 or 2048. Branch `fix/web-font-units-per-em`.
 0.49.0 (the latest release) and on fontations `main`. FreeType uses `FT_Pos`, which is
 64-bit on LP64 Linux and macOS. Other overflows may be reachable with a valid
 `unitsPerEm`, so the arithmetic is worth reporting to fontations.
+
+Round 4 confirmed it. Three inputs with a valid `unitsPerEm` of 72 overflow at
+`outline.rs:365` (`iup_interpolate`) when hinted at 2,048 px, but not at 1,024 px or
+below. In the browser these fonts at `font-size: 2048px` hit Southstar's layout overflow
+first (fixed in #315). After that fix the pages render, and the crashing glyph could not
+be reached from page text. A fix belongs in `skrifa`: 64-bit or saturating coordinates
+in the autohinter, as FreeType's `FT_Pos` gives on LP64.

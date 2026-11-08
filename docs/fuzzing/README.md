@@ -212,6 +212,53 @@ each on 2 CPUs and found nothing:
 - `media_commands` checks the shell's `open` URL vetting against the audio and video
   helpers' own tokenizers, as a differential.
 
+## Campaign of 2026-11-07/08, round 4
+
+Round 4 ran on upstream `main` (01d267c2) with all seven fixes merged in (#307, #308,
+#309, #312, #313, #315, #316). All 29 targets ran for 40 minutes each, 13 at a time on
+13 CPUs, starting from round 3's corpora. The `fonts` target also hinted at 2,048 px,
+besides 16 px, to reach overflows that need large sizes.
+
+No sanitizer report was found. `fonts` found three inputs, all with a valid
+`unitsPerEm` of 72, that overflow `skrifa`'s autohinter (`outline.rs:365`) at 2,048 px.
+At 16, 256, 512 and 1,024 px they don't crash. In the browser, a paragraph in these
+fonts at `font-size: 2048px` overflowed Southstar's own layout first (`layout.rs:975`,
+summed line heights). That is fixed in #315's second commit, after which the pages render.
+The `skrifa` overflow itself could not be reached from a page's characters, so it is
+reported as an upstream issue (see `web-font-units-per-em.md`).
+
+| Target | Coverage | Execs/s | Findings |
+|--------|---------:|--------:|---------:|
+| `js_eval` | 26,136 | 46 | 0 |
+| `js_builtins` | 24,037 | 27 | 0 |
+| `fonts` | 11,335 | 225 | 3 crashes (overflow) |
+| `svg` | 11,277 | 52 | 0 |
+| `wasm` | 10,906 | 7,870 | 0 |
+| `css_sheet` | 10,860 | 34 | 0 |
+| `images` | 6,375 | 449 | 0 |
+| `tls` | 4,558 | 360 | 0 |
+| `decompress` | 4,191 | 125 | 0 |
+| `html5_fragment` | 4,000 | 461 | 0 |
+| `html5_document` | 3,950 | 491 | 0 |
+| `raster` | 3,167 | 125 | 0 |
+| `woff` | 3,072 | 1,751 | 0 |
+| `css_values` | 2,758 | 8,221 | 0 |
+| `url` | 2,487 | 3,616 | 0 |
+| `cookies` | 2,402 | 2,562 | 0 |
+| `plmpeg` | 1,310 | 452 | 0 |
+| `xml` | 1,097 | 4,225 | 0 |
+| `bidi` | 1,011 | 2,562 | 0 |
+| `minimp3` | 936 | 132 | 0 |
+| `http_h2` | 777 | 2,944 | 0 |
+| `text_formats` | 709 | 9,328 | 0 |
+| `ipc` | 583 | 7,114 | 0 |
+| `css_syntax` | 543 | 772 | 0 |
+| `media_commands` | 445 | 6,473 | 0 |
+| `eventsource` | 361 | 8,028 | 0 |
+| `http_hpack` | 311 | 5,994 | 0 |
+| `http_h1` | 277 | 10,647 | 0 |
+| `websocket` | 156 | 37,891 | 0 |
+
 ## Findings
 
 | Report | Found by | Impact |
