@@ -3,6 +3,14 @@ Changelog:
 
 Southstar Browser 1.0.9-dev:
 ======
+* Flatpak: `packaging/flatpak/` builds Southstar as
+  `org.southstar.WebBrowser` on the GNOME 51 runtime, so one bundle installs
+  on any distribution with Flatpak, Ubuntu 22.04 and newer included. The
+  build is offline: every crate in `Cargo.lock` is fetched and checked
+  against the lock's checksum by flatpak-builder, from a source list
+  `cargo-sources.py` writes. The renderer keeps its seccomp and Landlock
+  sandbox inside Flatpak's, and the runtime's FFmpeg carries the VP8, VP9,
+  Opus and Vorbis decoders WebM needs.
 * Java shell: `java/` is a web browser for the JVM and a Java library over
   Southstar's engine, ported from Nordstjernen Sol's Java shell. The Swing
   browser (`java -jar southstar-java.jar URL`) has back, forward, reload,

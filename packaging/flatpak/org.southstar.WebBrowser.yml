@@ -1,0 +1,53 @@
+id: org.southstar.WebBrowser
+runtime: org.gnome.Platform
+runtime-version: '51'
+sdk: org.gnome.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+command: southstar
+rename-icon: southstar
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --device=dri
+  - --filesystem=xdg-download
+build-options:
+  append-path: /usr/lib/sdk/rust-stable/bin
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/man
+  - /lib/cmake
+modules:
+  - name: uchardet
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DBUILD_BINARY=OFF
+      - -DBUILD_STATIC=OFF
+      - -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+    sources:
+      - type: archive
+        url: https://www.freedesktop.org/software/uchardet/releases/uchardet-0.0.8.tar.xz
+        sha256: e97a60cfc00a1c147a674b097bb1422abd9fa78a2d9ce3f3fdcc2e78a34ac5f0
+
+  - name: southstar
+    buildsystem: simple
+    build-options:
+      env:
+        CARGO_HOME: /run/build/southstar/cargo
+    build-commands:
+      - cargo xtask build --webgpu disabled
+      - cargo xtask install --webgpu disabled --prefix /app
+    sources:
+      - type: dir
+        path: ../..
+        skip:
+          - target
+          - target-fast
+          - fuzz
+          - .flatpak-builder
+      - cargo-sources.json
